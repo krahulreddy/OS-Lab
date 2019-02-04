@@ -2,7 +2,7 @@
 #include<pthread.h>
 #include<semaphore.h>
 
-pthread_t prod[10], cons[10];
+pthread_t prod[100], cons[100];
 
 sem_t mutex, full, empty;
 int item;
