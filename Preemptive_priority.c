@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 struct process{
-    int id, at, bt, rt, ct, wt, tat;
+    int id, at, bt, rt, pty, ct, wt, tat;
 };
 
 int main()
@@ -11,24 +11,25 @@ int main()
     scanf("%d", &n);
     struct process p[n];
     int complete[n];
-    printf("Enter arrival times and burst times");
+    printf("Enter arrival times, burst times and priorities");
     for(i = 0; i < n; i++){
         p[i].id = i;
-        scanf("%d %d", &p[i].at, &p[i].bt);
+        scanf("%d %d %d", &p[i].at, &p[i].bt, &p[i].pty);
         complete[i] = 0;
         p[i].rt = p[i].bt;
     }
 
     int completed = 0, T = 0;
     while(completed != n){
-        int sj = -1, st = 1000000;
+        int sj = -1, sp = 1000000;
         for(i = 0; i < n; i++){
-            if(p[i].at <= T && p[i].rt < st && !complete[i]){
+            if(p[i].at <= T && p[i].pty < sp && !complete[i]){
                 sj = i;
-                st = p[i].bt;
+                sp = p[i].pty;
             }
         }
         if(sj == -1){
+            printf("Idle ");
             T++;
             continue;
         }
@@ -43,17 +44,17 @@ int main()
             T++;
             p[sj].rt--;
         }
-        printf("%d\t", sj);
+        printf("%d ", sj);
     }
     printf("\n");
-    for(i = 0; i < n - 1; i++)
-        for(j = 0; j < n - i - 1; j++){
-            if(p[j].ct > p[j + 1].ct){
-                struct process temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
-        }
+    // for(i = 0; i < n - 1; i++)
+    //     for(j = 0; j < n - i - 1; j++){
+    //         if(p[j].ct > p[j + 1].ct){
+    //             struct process temp = p[j];
+    //             p[j] = p[j + 1];
+    //             p[j + 1] = temp;
+    //         }
+    //     }
     for(i = 0; i < n; i++){
         printf("%d %d %d %d\n", p[i].id, p[i].at, p[i].bt, p[i].ct);
     }
