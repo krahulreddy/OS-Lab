@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<stdlib.h>
+#include<stdlib.h>		//added now
 
 struct process{
     int id, at, bt;
