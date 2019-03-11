@@ -21,10 +21,10 @@ int main()
 		{
                         scanf("%d", &current_alloc[i][j]);
 			current_alloc1[i][j] = current_alloc[i][j];
-			rem_need1[i][j] = rem_need[i][j] = max_need[i][j] - current_alloc[i][j];
+			rem_need[i][j] = max_need[i][j] - current_alloc[i][j];
 			//rem_need[i][j] = rem_need[i][j] > 0 ? rem_need[i][j] : 0;
 			if(rem_need[i][j] < 0)
-				rem_need1[i][j] = rem_need[i][j] = 0;
+				rem_need[i][j] = 0;
 		}
         }
 	printf("Enter available values : \n");
@@ -43,8 +43,10 @@ int main()
 	int k, flag = 0, sequence[p], next = 0, finish[p], finished = 0, prev_finished = 0;
 	for(i = 0; i < p; i++)
 		finish[i] = 0;
-	while(finished != p)
+	int t = 0;
+	while(finished != p && t < p * p)
 	{
+		t++;
 		flag = 0;
 		for(i = 0; i < p; i++)
 		{
@@ -62,22 +64,23 @@ int main()
 				sequence[next++] = i;
 				printf("%d  %d\n", i, finished);
 				for(k = 0; k < r; k++)
-					available[k] += rem_need[i][k];
+				{
+					available[k] += current_alloc[i][k];
+					printf("%d ", available[k]);
+				}
 				i = 0;
 			}
-			else
+/*			else
 				for(k = 0; k < r; k++)
                         	{
 					available[k] += current_alloc[i][k];
 					current_alloc[i][k] = 0;
 					rem_need[i][k] = max_need[i][k];
-				}
+				}*/
 		}
-		if(flag == 0)
-			break;
 		prev_finished = finished;
 	}
-	if(!flag && finished != p)
+	if(finished != p)
 		printf("Not safe!!\n");
 	else
 	{
@@ -93,9 +96,16 @@ int main()
 	for(j = 0; j < r; j++)
 	{
 		scanf("%d", &new_req);
-		max_need1[req][j] += new_req;
+		max_need[req][j] = new_req;
 	}
-	printf("Remaining need : \n");
+	printf("current alloc  : \n");
+	for(i = 0; i < p; i++)
+        {
+                for(j = 0; j < r; j++)
+                        printf("%d ", current_alloc1[i][j]);
+                printf("\n");
+        }
+	for(i = 0; i < p; i++)
 	for(j = 0; j < r; j++)
                 {
                        	//scanf("%d", &current_alloc[i][j]);
@@ -117,8 +127,10 @@ int main()
 	prev_finished = 0;
         for(i = 0; i < p; i++)
                 finish[i] = 0;
-        while(finished != p)
+	t = 0;
+        while(finished != p && t < p * p)
         {
+		t++;
                 flag = 0;
                 for(i = 0; i < p; i++)
                 {
@@ -136,20 +148,18 @@ int main()
                                 sequence[next++] = i;
                                 printf("%d  %d\n", i, finished);
                                 for(k = 0; k < r; k++)
-                                        available1[k] += rem_need1[i][k];
+                                        available1[k] += current_alloc1[i][k];
                                 i = 0;
                         }
-			else
-                                for(k = 0; k < r; k++)
-                                {
-                                        available1[k] += current_alloc[i][k];
-                                        current_alloc1[i][k] = 0;
-                                        rem_need1[i][k] = max_need[i][k];
-                                }
+	//		else
+//                                for(k = 0; k < r; k++)
+ //                               {
+ //                                       available1[k] += current_alloc[i][k];
+  //                                      current_alloc1[i][k] = 0;
+    //                                    rem_need1[i][k] = max_need[i][k];
+      //                          }
 
                 }
-                if(flag == 0)
-                        break;
                 prev_finished = finished;
         }
         if(!flag && finished != p)
