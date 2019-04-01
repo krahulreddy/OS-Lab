@@ -32,18 +32,15 @@ int main()
 	printf("Enter direction (l ==> 1, r ==> 2) : ");
 	scanf("%d", &dir);
 	for(i = 0; i < n - 1; i++)
-		for(k = 0; k < n - i + 1; k++)
+		for(k = 0;k < n - i + 1; k++)
 		{
-			if(s[k] > s[k + 1])
+			if(s[k] >s[k + 1])
 			{
 				temp = s[k];
 				s[k] = s[k + 1];
 				s[k + 1] = temp;
 			}
 		}
-	for(i = 0; i < n; i++)
-		printf("%d ", s[i]);
-	printf("\n");
 	int completed = 0;
 	if(dir == 2)
 	{
@@ -59,9 +56,9 @@ int main()
 			}
                 }
 		T = T + m - pos;
-		pos = m;
+		pos = 0;
 		printf("%d\t", T);
-		for(i = n - 1; i >= 0; i--)
+		for(i = 0; i < n; i++)
 		{
 			if(!complete[i])
 			{
@@ -86,9 +83,9 @@ int main()
                         }
                 }
                 T = T + pos;
-                pos = 0;
+                pos = m;
                 printf("%d(%d)\t", pos, T);
-                for(i = 0; i < n; i++)
+                for(i = n - 1; i >= 0; i--)
                 {
                         if(!complete[i])
                         {
@@ -98,34 +95,6 @@ int main()
                                 pos = s[i];
                         }
                 }
-/*		int next = -1;
-                for(i = 1; i < n; i++)
-                {
-                        if(s[i - 1] < p && s[i] > p)
-                                next = i;
-                }
-                for(next = next; next >= 0; next--)
-                {
-                        if(!complete[next])
-                        {
-                                T += d(s[next], p);
-                                p = s[next];
-                                completed++;
-                                complete[next] = 1;
-                                printf("%d\t", s[next]);
-                        }
-                }
-                for(next = 0; next < n; next++)
-                {
-                        if(!complete[next])
-                        {
-                                T += d(s[next], p);
-                                p = s[next];
-                                completed++;
-                                complete[next] = 1;
-                                printf("%d\t", s[next]);
-                        }
-                }
-*/	}
+	}
 	printf("\nTotal : %d\n", T);
 }
